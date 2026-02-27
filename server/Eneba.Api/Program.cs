@@ -95,4 +95,9 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllers();
 
+app.MapGet("/", () => Results.Ok(new {
+  name = "Eneba Intern Task API",
+  endpoints = new[] { "/health", "/list", "/list?search=<game>" , "/swagger" }
+}));
+
 app.Run();
