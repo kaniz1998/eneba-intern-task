@@ -4,6 +4,17 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("https://taupe-syrniki-bbeaaf.netlify.app")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -92,7 +103,7 @@ using (var scope = app.Services.CreateScope())
         db.SaveChanges();
     }
 }
-
+app.UseCors("AllowFrontend");
 app.MapControllers();
 
 app.MapGet("/", () => Results.Ok(new {
