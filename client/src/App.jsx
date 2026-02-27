@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
+
+
 function useDebounce(v, d = 250) {
   const [x, setX] = useState(v);
   useEffect(() => {
@@ -10,7 +12,10 @@ function useDebounce(v, d = 250) {
 }
 
 export default function App() {
-  const API = import.meta.env.VITE_API_URL;
+  const API = import.meta.env.VITE_API_BASE_URL;
+  
+  if (!API) return <div style={{ padding: 20 }}>Missing VITE_API_BASE_URL</div>;
+  
   const [q, setQ] = useState("");
   const dq = useDebounce(q, 250);
   const [games, setGames] = useState([]);
